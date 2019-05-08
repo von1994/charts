@@ -1,0 +1,4 @@
+name: elasticsearch
+version: 1.0.0
+appVersion: 6.6.0
+apiVersion: v1

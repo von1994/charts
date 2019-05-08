@@ -1,21 +1,21 @@
 image:
-  repository: gcr.io/google-containers/fluentd-elasticsearch
+  repository: harbor.allseeingsecurity.net/monitoring/fluentd-elasticsearch
 ## Specify an imagePullPolicy (Required)
 ## It's recommended to change this to 'Always' if the image tag is 'latest'
 ## ref: http://kubernetes.io/docs/user-guide/images/#updating-images
-  tag: v2.3.2
+  tag: v2.3.1
   pullPolicy: IfNotPresent
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 500Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 200Mi
+resources:
+  limits:
+    cpu: 100m
+    memory: 500Mi
+  requests:
+    cpu: 50m
+    memory: 200Mi
 
 elasticsearch:
   host: 'elasticsearch-client'
@@ -82,7 +82,8 @@ tolerations: {}
   #   operator: Exists
   #   effect: NoSchedule
 
-nodeSelector: {}
+nodeSelector:
+  logging-fluentd: "true"
 
 service: {}
   # type: ClusterIP
@@ -489,3 +490,23 @@ configMaps:
 #   - name: es-certs
 #     mountPath: /certs
 #     readOnly: true
+#
+
+elasticsearch-logging:
+  enabled: true
+
+kibana-logging:
+  enabled: true
+
+elasticsearch-curator:
+  enabled: true
+
+#discard
+#global:
+#  nodeselector:
+#    elasticsearch-logging:
+#      logging: true
+#    kibana-logging:
+#      logging: true
+#    elasticsearch-curator:
+#      logging: true
